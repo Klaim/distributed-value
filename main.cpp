@@ -1,6 +1,7 @@
 #include <boost/thread.hpp>
 #include <boost/atomic/atomic.hpp>
 
+#include "distributed_value.hpp"
 
 class System_A
 {
@@ -39,6 +40,15 @@ private:
 int main()
 {
     System_A a;
+
+    util::distributed<int> source( 42 );
+    auto proxy = source.make_proxy();
+    assert( proxy.get() == 42 );
+
+    source.change( []( int& value ){ value = 99; } );
+
+    assert( proxy.get() == 99 );
+
     a.request_end();
     return 0;
 }
