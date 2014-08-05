@@ -41,11 +41,11 @@ int main()
 {
     System_A a;
 
-    util::distributed<int> source( 42 );
+    util::distributed<int>::source source( 42 );
     auto proxy = source.make_proxy();
     assert( proxy.get() == 42 );
 
-    source.change( []( int& value ){ value = 99; } );
+    source( []( int& value ){ value = 99; } );
 
     assert( proxy.get() == 99 );
 
