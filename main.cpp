@@ -41,7 +41,7 @@ int main()
 {
     System_A a;
 
-    util::distributed<int>::source source( 42 );
+    distributed::source<int> source( 42 );
     auto proxy = source.make_proxy();
     assert( proxy.get() == 42 );
 
